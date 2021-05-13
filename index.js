@@ -4,7 +4,7 @@ const inports = require("./data/testdata.json");
 let port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    res.send('hello mother fuckers');
+    res.send('Surprise Motherfucker');
 });
 
 app.get('/ranks', (req, res) => {
