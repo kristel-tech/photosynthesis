@@ -1,0 +1,30 @@
+{
+    "name": "photosynthesis",
+    "version": "1.0.0",
+    "description": "photosynthesis api for heroku",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js"
+
+    },
+    "engins": {
+        "node": "15.5.0"
+
+    },
+
+
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kristel-tech/photosynthesis.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kristel-tech/photosynthesis/issues"
+    },
+    "homepage": "https://github.com/kristel-tech/photosynthesis#readme",
+    "dependencies": {
+        "express": "^4.17.1"
+    }
+}
