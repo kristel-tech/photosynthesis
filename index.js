@@ -3,8 +3,14 @@ var app = express();
 const inports = require("./data/testdata.json");
 let port = process.env.PORT || 3000;
 
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
+app.use(express.static("jsfiles"));
+app.use(express.static("audio"));
+
 app.get('/', (req, res) => {
-    res.send('Surprise Motherfucker');
+    res.render("pages/index");
 });
 
 app.get('/ranks', (req, res) => {

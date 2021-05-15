@@ -6,14 +6,10 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node index.js"
-
     },
     "engins": {
         "node": "15.5.0"
-
     },
-
-
     "repository": {
         "type": "git",
         "url": "git+https://github.com/kristel-tech/photosynthesis.git"
@@ -25,6 +21,7 @@
     },
     "homepage": "https://github.com/kristel-tech/photosynthesis#readme",
     "dependencies": {
+        "ejs": "^3.1.6",
         "express": "^4.17.1"
     }
 }
