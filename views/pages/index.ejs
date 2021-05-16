@@ -14,12 +14,10 @@
     <main>
 
 
+        <%- include('../partials/osiloscopecode'); %>
 
-        <canvas id="audio_visual" height="500" width="1000"></canvas>
-
-        <audio id="myAudio" controls preload="none" src="/SineWave100hz.mp3" type="audio/mp3"></audio>
-        <input list="wavetypes" name="wavetypes" id="wavetype" onchange="setaudiosource()">
-        <datalist id="wavetypes">
+            <input list="wavetypes" name="wavetypes" id="wavetype" onchange="setaudiosource()">
+            <datalist id="wavetypes">
           <option value="sine"></option>
           <option value="saw"></option>
           <option value="triangle"></option>
