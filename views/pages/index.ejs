@@ -15,7 +15,7 @@
 
 
 
-        <canvas id="audio_visual" height="500" width="1000"></canvas>
+        <canvas id="audio_visual" height="500" width="1000" onload="auth"></canvas>
 
         <audio id="myAudio" controls preload="none" src="/SineWave100hz.mp3" type="audio/mp3"></audio>
         <input list="wavetypes" name="wavetypes" id="wavetype" onchange="setaudiosource()">
@@ -34,6 +34,7 @@
 
 </body>
 <script>
+
     function setaudiosource() {
         var wavetype = document.getElementById("wavetype");
         var audioplayer = document.getElementById("myAudio");
