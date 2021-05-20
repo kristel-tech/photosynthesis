@@ -18,7 +18,7 @@ const currentConfig = {
   },
 };
 
-const isLocalhost = true;
+const isLocalhost = false;
 
 const [
   localRedirectSignIn,
