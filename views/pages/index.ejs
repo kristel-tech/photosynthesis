@@ -14,24 +14,40 @@
     <main>
 
 
-
+        <!-- visualizer-->
         <canvas id="audio_visual" height="500" width="1000"></canvas>
 
-        <audio id="myAudio" controls preload="none" src="/SineWave100hz.mp3" type="audio/mp3"></audio>
+        <!-- <audio id="myAudio" controls preload="none" src="/SineWave100hz.mp3" type="audio/mp3"></audio>
         <input list="wavetypes" name="wavetypes" id="wavetype" onchange="setaudiosource()">
         <datalist id="wavetypes">
           <option value="sine"></option>
           <option value="saw"></option>
           <option value="triangle"></option>
           <option value="square"></option>
-        </datalist>
+        </datalist> -->
 
+        
+        <!-- oscialltor-->
+        <section>
+            <article>
+                <label for="Attack">Attack</label>
+                <input name="Attack" id="Attack" type="range" min="0" max="1" value="0.2" step="0.1" />
+                <label for="Release">Decay</label>
+                <input name="Release" id="Release" type="range" min="0" max="1" value="0.5" step="0.1" />
+                <label for="Sustain">Sustain</label>
+                <input type="range" min="0.0" max="3.0" value="0" class="slider" id="Sustain">
+            </article>
+            <article id="newKeyboard">
+
+            </article>
+
+        </section>
     </main>
 
     <footer>
 
     </footer>
-
+    <script type="text/javascript" src="/oscillatortest.js"></script>
 </body>
 <script>
     function setaudiosource() {
@@ -54,6 +70,7 @@
         }
     }
 </script>
-<script src="/osiloscopecode.js"></script>
+<!-- <script src="/osiloscopecode.js"></script> -->
+<!-- <script src="/oscillatortest.js"></script> -->
 
 </html>
