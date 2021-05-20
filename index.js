@@ -13,7 +13,7 @@ const config = {
 
 let app = express();
 //const inports = require("data/testdata.json");
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 4000;
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
@@ -25,8 +25,12 @@ app.use(express.static("audio"));
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
-app.get('/', (req, res) => {
-  res.render('pages/landing');
+// app.get('/', (req, res) => {
+//   res.render("pages/landing");
+// });
+
+app.get("/synth", requiresAuth(), (req, res) => {
+  res.render("pages/index");
 });
 
 app.get('/profile', requiresAuth(), (req, res) => {
@@ -34,13 +38,14 @@ app.get('/profile', requiresAuth(), (req, res) => {
 });
 
 app.get('/callback', (req, res) => {
-  res.render("pages/index");
+  res.redirect("/synth");
 });
 
 app.get('/logout', (req, res) => {
   req.logout();
   res.redirect("/");
 });
+
 app.listen(port, () => {
 
     console.log('Server is listening on port 3000');
