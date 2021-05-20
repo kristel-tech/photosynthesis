@@ -1,6 +1,6 @@
 function Getconfig() {
     let sel = document.getElementById("configs");
-    $.post("https://photosynthesynth.herokuapp.com/getconfig/", {
+    $.post("https://photosynthesis2.herokuapp.com/getconfig/", {
             USERID: "2343523"
         },
         function(data, status) {
@@ -33,7 +33,7 @@ function Getconfig() {
 
 function UpdateConfigData() {
 
-    $.post("https://photosynthesynth.herokuapp.com/updateconfig/", {
+    $.post("https://photosynthesis2.herokuapp.com/updateconfig/", {
             ID: GetSelectedConfig().ID,
             JSONDATA: JSON.stringify(getthis())
         },
@@ -49,7 +49,7 @@ function DeleteConfigData() {
     // consil
     $.ajax({
         type: "PUT",
-        url: "https://photosynthesynth.herokuapp.com/deleteconfig/",
+        url: "https://photosynthesis2.herokuapp.com/deleteconfig/",
         dataType: "text",
         data: {
             CONFIG: GetSelectedConfig().ID
@@ -68,7 +68,7 @@ function NewConfigData(name) {
     // consil
     $.ajax({
         type: "PUT",
-        url: "https://photosynthesynth.herokuapp.com/addconfig/",
+        url: "https://photosynthesis2.herokuapp.com/addconfig/",
         dataType: "text",
         data: {
             USERID: 2343523,
