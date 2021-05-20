@@ -11,10 +11,11 @@ app.set('view engine', 'ejs');
 
 app.use(express.static("jsfiles"));
 app.use(express.static("audio"));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     if (user == null) {
-      console.log()
+      console.log("attempted sign in");
       Amplify.Auth.federatedSignIn().then(cred => {
         return Amplify.Auth.currentCredentials();
       }).then(u => {
@@ -33,7 +34,7 @@ app.get('/callback', (req, res) => {
 
 app.get('/signOut', (req, res) => {
     Amplify.Auth.signOut({global: true});
-    open("/");
+    //open("/");
 });
 
 app.listen(port, () => {
