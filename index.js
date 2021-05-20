@@ -21,11 +21,13 @@ const config = {
 let app = express();
 //const inports = require("data/testdata.json");
 
+
 let port = process.env.PORT || 4000;
 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
@@ -33,15 +35,14 @@ app.set('view engine', 'ejs');
 app.use(express.static("css"));
 app.use(express.static("jsfiles"));
 app.use(express.static("audio"));
-
 app.use(express.static("assets"));
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
 app.get('/', (req, res) => {
+
     res.redirect("/synth");
 });
 
@@ -83,7 +84,7 @@ app.get('/profile', requiresAuth(), (req, res) => {
 });
 
 app.get('/callback', (req, res) => {
-    res.render("pages/index");
+  res.redirect("/synth");
 });
 
 app.get('/logout', (req, res) => {
