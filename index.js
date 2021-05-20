@@ -35,11 +35,6 @@ app.get('/callback', (req, res) => {
     res.render("pages/index");
 });
 
-app.get('/signOut', (req, res) => {
-    Amplify.Auth.signOut({global: true});
-    //open("/");
-});
-
 app.listen(port, () => {
 
     console.log('Server is listening on port 3000');
