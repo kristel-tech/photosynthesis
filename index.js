@@ -1,6 +1,4 @@
-const inports = require("./data/testdata.json");
 const express = require('express');
-const open = require('open');
 require('./jsfiles/Amplify');
 const Amplify = require('aws-amplify');
 let app = express();
@@ -16,6 +14,7 @@ app.use(express.static("audio"));
 
 app.get('/', (req, res) => {
     if (user == null) {
+      console.log()
       Amplify.Auth.federatedSignIn().then(cred => {
         return Amplify.Auth.currentCredentials();
       }).then(u => {
