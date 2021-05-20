@@ -15,6 +15,7 @@ app.use(express.static("audio"));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
+    console.log("attempted sign in");
     if (user == null) {
       console.log("attempted sign in");
       Amplify.Auth.federatedSignIn().then(cred => {
