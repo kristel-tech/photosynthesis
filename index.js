@@ -17,7 +17,7 @@ let app = express();
 //const inports = require("data/testdata.json");
 
 
-let port = process.env.PORT || 4000;
+let port = process.env.PORT || 3000;
 
 
 app.use(express.urlencoded({ extended: true }));
