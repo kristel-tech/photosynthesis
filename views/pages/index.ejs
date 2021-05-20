@@ -39,9 +39,9 @@
           <option value="triangle "></option>
           <option value="square "></option>
         </datalist>
-        <form action="https://photosynthesynth.herokuapp.com/logout">
-            <input type="submit" value="Sign Out" />
-        </form>
+                <form action="https://photosynthesynth.herokuapp.com/logout">
+                    <input type="submit" value="Sign Out" />
+                </form>
 
     </main>
 
@@ -89,7 +89,7 @@
     }
 
     function UpdateConfigData() {
-        $.put("http://localhost:3000/UpdateRecord/", {
+        $.put("http://localhost:4000/UpdateRecord/", {
                 ID: GetSelectedConfig().ID,
                 JSONDATA: JSON.stringify(getthis())
             },
