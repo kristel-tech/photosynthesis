@@ -1,13 +1,8 @@
 const express = require('express');
-
-const app = express();
-
-
-
 const connect = require("./database/databasesetup.js");
-
 const path = require('path');
 const { auth, requiresAuth } = require('express-openid-connect');
+let app = express();
 
 const config = {
     authRequired: true,
@@ -18,7 +13,7 @@ const config = {
     issuerBaseURL: 'https://dev-70k6l87u.us.auth0.com'
 };
 
-let app = express();
+
 //const inports = require("data/testdata.json");
 
 
@@ -84,7 +79,7 @@ app.get('/profile', requiresAuth(), (req, res) => {
 });
 
 app.get('/callback', (req, res) => {
-  res.redirect("/synth");
+    res.redirect("/synth");
 });
 
 app.get('/logout', (req, res) => {
