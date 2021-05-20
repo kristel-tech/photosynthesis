@@ -1,6 +1,5 @@
 const inports = require("./data/testdata.json");
 const express = require('express');
-const open = require('open');
 require('./jsfiles/Amplify');
 const Amplify = require('aws-amplify');
 let app = express();
@@ -35,7 +34,7 @@ app.get('/callback', (req, res) => {
 
 app.get('/signOut', (req, res) => {
     Amplify.Auth.signOut({global: true});
-    open("/");
+    //open("/");
 });
 
 app.listen(port, () => {
