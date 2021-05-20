@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node index.js"
+        "start": "node index.js",
+        "postinstall": "npm i ./auth --save;"
     },
     "engins": {
         "node": "15.5.0"
@@ -21,6 +22,7 @@
     },
     "homepage": "https://github.com/kristel-tech/photosynthesis#readme",
     "dependencies": {
+        "@aws-amplify/auth": "file:auth",
         "aws-amplify": "^4.0.2",
         "ejs": "^3.1.6",
         "express": "^4.17.1",

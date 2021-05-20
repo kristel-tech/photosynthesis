@@ -1,4 +1,3 @@
-const inports = require("./data/testdata.json");
 const express = require('express');
 require('./jsfiles/Amplify');
 const Amplify = require('aws-amplify');
@@ -12,7 +11,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.static("jsfiles"));
 app.use(express.static("audio"));
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     if (user == null) {
