@@ -17,16 +17,19 @@ app.use(express.static("audio"));
 app.get('/', (req, res) => {
     console.log(user);
     if (user === null) {
-      console.log("attempted sign in");
-      Amplify.Auth.federatedSignIn().then(cred => {
-        return Amplify.Auth.currentCredentials();
-      }).then(u => {
-        user = u;
-        res.render("pages/index");
-        console.log(u);
-      }).catch(e => {
-        res.render("failed to login. f5");
+      Amplify.Auth.signOut({global: true}).then(() => {
+        console.log("attempted sign in");
+        Amplify.Auth.federatedSignIn().then(cred => {
+          return Amplify.Auth.currentCredentials();
+        }).then(u => {
+          user = u;
+          console.log(u);
+        }).catch(e => {
+          res.render("failed to login. f5");
+        });
       });
+    } else {
+      res.render("pages/index");
     }
 });
 
