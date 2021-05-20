@@ -20,14 +20,14 @@ app.set('view engine', 'ejs');
 
 app.use(express.static("jsfiles"));
 app.use(express.static("audio"));
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
-// app.get('/', (req, res) => {
-//   res.render("pages/landing");
-// });
+app.get('/', (req, res) => {
+  res.redirect("/synth");
+});
 
 app.get("/synth", requiresAuth(), (req, res) => {
   res.render("pages/index");
