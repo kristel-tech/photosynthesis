@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body class="container">
+
+    <header>
+
+    </header>
+
+    <main>
+
+
+        <!-- visualizer-->
+        <canvas id="audio_visual" height="500" width="1000"></canvas>
+
+        <audio id="myAudio" controls preload="none" src="/SineWave100hz.mp3" type="audio/mp3"></audio>
+        <input list="wavetypes" name="wavetypes" id="wavetype" onchange="setaudiosource()">
+        <datalist id="wavetypes">
+          <option value="sine"></option>
+          <option value="saw"></option>
+          <option value="triangle"></option>
+          <option value="square"></option>
+        </datalist>
+
+        
+        <!-- oscialltor-->
+        <section>
+                <button data-note="A4" data-frequency="440">A4</button>
+                <button>TEST1</button>
+                <button>TEST1</button>
+
+
+
+<!-- 
+            <div class="container">
+                <div class="keyboard"></div>
+              </div>
+      
+        <div class="settingsBar">
+            <div class="left">
+                <span>Volume: </span>
+                <input type="range" min="0.0" max="1.0" step="0.01" value="0.5" list="volumes" name="volume">
+                <datalist id="volumes">
+                    <option value="0.0" label="Mute">
+                    <option value="1.0" label="100%">
+                </datalist>
+            </div>
+            <div class="right">
+                <span>Current waveform: </span>
+                <select name="waveform">
+                    <option value="sine">Sine</option>
+                    <option value="square" selected>Square</option>
+                    <option value="sawtooth">Sawtooth</option>
+                    <option value="triangle">Triangle</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+        </div> -->
+        </section>
+    </main>
+
+    <footer>
+
+    </footer>
+
+</body>
+
+<script src="/osiloscopecode.js"></script>
+<script src="/oscillator.js"></script>
+</html>
