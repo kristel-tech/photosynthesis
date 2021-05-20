@@ -14,7 +14,6 @@ const config = {
 let app = express();
 //const inports = require("data/testdata.json");
 let port = process.env.PORT || 3000;
-let user = null;
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
@@ -26,25 +25,9 @@ app.use(express.static("audio"));
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
-// req.isAuthenticated is provided from the auth router
 app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-});
-
-app.get('/', (req, res) => {
-    console.log(user);
-    if (user === null) {
-      console.log("attempted sign in");
-      Amplify.Auth.federatedSignIn().then(cred => {
-        return Amplify.Auth.currentCredentials();
-      }).then(u => {
-        user = u.sessionToken;
-        console.log(u);
-      }).catch(e => {
-        res.render("failed to login. f5");
-      });
-    } else {
-      res.render("pages/index");
+    if (!req.oidc.isAuthenticated()) {
+       res.render("Please login");
     }
 });
 
