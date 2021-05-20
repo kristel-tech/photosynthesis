@@ -38,11 +38,17 @@ app.use(auth(config));
 
 app.get('/', (req, res) => {
 
-    res.redirect("/synth");
+    res.render("pages/index");
 });
 
 app.get("/synth", requiresAuth(), (req, res) => {
     res.render("pages/index");
+});
+
+// TODO use correct request method needs to be PUT
+app.put('/addconfig', (req, res) => {
+    let dbconnectinst = new connect();
+    dbconnectinst.SetConfigData(req, res, '/addconfig');
 });
 
 // TODO use correct request method needs to be PUT
