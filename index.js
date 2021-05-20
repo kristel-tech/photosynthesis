@@ -37,6 +37,13 @@ app.get('/profile', requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));
 });
 
+app.get('/callback', (req, res) => {
+  res.redirect("/");
+});
+
+app.get('/logout', (req, res) => {
+  res.redirect("/");
+});
 app.listen(port, () => {
 
     console.log('Server is listening on port 3000');
