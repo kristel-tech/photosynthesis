@@ -12,22 +12,22 @@ app.set('view engine', 'ejs');
 
 app.use(express.static("jsfiles"));
 app.use(express.static("audio"));
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    console.log("attempted sign in");
-    if (user == null) {
+    console.log(user);
+    if (user === null) {
       console.log("attempted sign in");
       Amplify.Auth.federatedSignIn().then(cred => {
         return Amplify.Auth.currentCredentials();
       }).then(u => {
         user = u;
+        res.render("pages/index");
         console.log(u);
       }).catch(e => {
-        console.log(e);
+        res.render("failed to login. f5");
       });
     }
-    res.render("pages/index");
 });
 
 app.get('/callback', (req, res) => {
