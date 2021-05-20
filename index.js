@@ -1,9 +1,10 @@
 const express = require('express');
 const path = require('path');
-const { auth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect');
+const { requiresAuth } = require('express-openid-connect');
 
 const config = {
-  authRequired: false,
+  authRequired: true,
   auth0Logout: true,
   secret: 'a long, randomly-generated string stored in env',
   baseURL: 'https://photosynthesynth.herokuapp.com',
@@ -27,14 +28,14 @@ app.use(auth(config));
 
 app.get('/', (req, res) => {
     if (!req.oidc.isAuthenticated()) {
-       res.render("Please login");
+       res.render('pages/landing');
     } else {
       res.render("pages/index");
     }
 });
 
-app.get('/callback', (req, res) => {
-    res.render("pages/index");
+app.get('/profile', requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
 });
 
 app.listen(port, () => {
