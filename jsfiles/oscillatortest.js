@@ -1,110 +1,80 @@
 
-const context = new AudioContext();
-let startButton = document.getElementById("btnPlay");
-let stopButton = document.getElementById("btnStop");
-let pressedKey = document.getElementById("keypressed");
-var oscillator1;
-var oscillator2;
-var oscillator3;
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const globalAudioContext = new AudioContext();
+const waveforms = ["sawtooth","sine","square", "triangle"];  //add eventlistener delete comment
+let attackTime = 0.2;
+let releaseTime = 0.5;
+let attackControl = document.querySelector('#Attack');
+let releaseControl = document.querySelector('#Release');
+let sustain = 1;  //add eventlistener delete comment
+let oscillatorOneWaveShape = "sawtooth";  //add eventlistener delete comment might delete whole line
+let detune = 0;
+
+
+//CREATE FX NODES
+
+const keys = [
+    { name: "C", frequency: 261.63 },
+    { name: "C#", frequency: 277.18 },
+    { name: "D", frequency: 293.66 },
+    { name: "D#", frequency: 311.13 },
+    { name: "E", frequency: 329.63 },
+    { name: "F", frequency: 349.23 },
+    { name: "F#", frequency: 369.99 },
+    { name: "G", frequency: 392.0 },
+    { name: "G#", frequency: 415.3 },
+    { name: "A", frequency: 440.0 },
+    { name: "A#", frequency: 466.16 },
+    { name: "B", frequency: 493.88 },
+    { name: "C", frequency: 523.25 },
+  ];
 
 
 
+// EVENT LISTENERS
+  attackControl.addEventListener('input', function() {
+      attackTime = Number(this.value);
+  }, false);
+  
 
-function playNote(noteFrequency){
-    console.log(noteFrequency);
-    oscillator1 = context.createOscillator();
-    oscillator2 = context.createOscillator();
-    oscillator3 = context.createOscillator();
-    
-    gainNode1 = context.createGain();
-    gainNode2 = context.createGain();
-    gainNode3 = context.createGain();
-    
-    
-    oscillator1.type = "sawtooth";
-    oscillator1.frequency.value = noteFrequency; 
-    oscillator1.connect(context.destination);
-    gainNode1.connect(context.destination);
-    gainNode2.gain.value = 0.5; 
-    
-    oscillator2.type = "square"; 
-    oscillator2.frequency.value = 444; 
-    oscillator2.connect(gainNode2); 
-    gainNode2.connect(context.destination); 
-    gainNode2.gain.value = 0.3; 
+  releaseControl.addEventListener('input', function() {
+      releaseTime = Number(this.value);
+  }, false);
+
+
+  keys.forEach(({ name, frequency }) => {
+    const noteButton = document.createElement("button");
+    noteButton.innerText = name;
+    noteButton.className = "key__div key-black__div";
+    noteButton.addEventListener("click", () => {
+      const now = globalAudioContext.currentTime;
+      const osc1 = globalAudioContext.createOscillator();
+       
+      osc1.type = "triangle";
+      osc1.frequency.value = frequency; 
      
-    
-    oscillator3.type = "triangle"; 
-    oscillator3.frequency.value = 50;
-    oscillator3.connect(gainNode3); 
-    gainNode3.connect(context.destination); 
-    gainNode3.gain.value = 0.4;       
-    oscillator1.start(0);
-    oscillator1.stop(0.2);   
-}
+      let adsrEnvelope = globalAudioContext.createGain();
+      adsrEnvelope.gain.cancelScheduledValues(now);
+      adsrEnvelope.gain.setValueAtTime(0, now);
+      //attack
+      adsrEnvelope.gain.linearRampToValueAtTime(1, now + attackTime);
+      //release
+      adsrEnvelope.gain.linearRampToValueAtTime(0, now + sustain - releaseTime);
 
-function noteOn() {
-    console.log("on");
-    oscillator1.start(0); 
-    // oscillator2.start(1);
-    // oscillator3.start(1); 
-}
+      const lfo = globalAudioContext.createOscillator();
+      lfo.type = 'square';
+      lfo.frequency.value = 10;
 
+      let pulseTime = 1;
+      lfo.connect(adsrEnvelope.gain);
+      lfo.start();
+      // osc.stop(time + pulseTime);
 
-function noteOff() {
-    console.log("off");
-    oscillator1.stop(1); 
-    // oscillator2.stop();
-    // oscillator3.stop(); 
-}
+      osc1.connect(adsrEnvelope).connect(globalAudioContext.destination);
+      osc1.start(now);
+      osc1.stop(now + sustain);
 
-/////////////////////
-
-// ADSR CLASS
-
-
-
-
-
-// stopButton.addEventListener("mouseup", function (e) {
-//     noteOff();
-// });
-
-// document.addEventListener("keydown", function(e){
-//     console.log(e);
-//     switch (e.key) {
-//          case 81: // Q
-//             noteOn();
-//          break;
-//          case 87: // W
-//             noteOff();
-//          break;
-//     }
-// });
-
-// document.addEventListener('keydown', makesound);
-startButton.addEventListener('click',makesound)
-stopButton.addEventListener('click',makesound)
-
-// document.addEventListener('keyup', stopMakingSound);
-
-
-
-function makesound(e) {
-    // console.log(e.target.dataset.note); 
-    var freq = e.target.dataset.frequency;
-    var note = e.target.dataset.note;
-    switch (note) {
-                 case 'A4': // Q
-                    playNote(freq);
-                 break;
-                 case 'C4': // W
-                    playNote(freq);
-                 break;
-            }
-  pressedKey.innerHTML = e.key;
-}
-
-function stopMakingSound(e){
-pressedKey.innerHTML = e.key;
-}
+    });
+    document.getElementById('newKeyboard').appendChild(noteButton)
+    // document.body.appendChild(noteButton);
+  });

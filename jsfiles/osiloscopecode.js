@@ -8,7 +8,7 @@ analyser.fftSize = 2048;
 
 let source = audioCtx.createMediaElementSource(audioElement);
 
-source.connect(analyser);
+    source.connect(analyser);
 //this connects our music back to the default output, such as your //speakers 
 source.connect(audioCtx.destination);
 

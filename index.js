@@ -11,8 +11,9 @@ app.use(express.static("audio"));
 app.use(express.static("css"));
 
 app.get('/', (req, res) => {
-    res.render("pages/oscillator");
+    res.render("pages/index");
 });
+
 
 app.get('/ranks', (req, res) => {
     res.send(inports);

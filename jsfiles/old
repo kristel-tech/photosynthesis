@@ -1,0 +1,150 @@
+
+var globalAudioContext = new AudioContext();
+var startButton = document.getElementById("btnPlay");
+var stopButton = document.getElementById("btnStop");
+var pressedKey = document.getElementById("keypressed");
+var oscillator1;
+var oscillator2;
+var oscillator3;
+var primaryGainControl = globalAudioContext.createGain();
+primaryGainControl.gain.setValueAtTime(0.1, 0);
+
+var notes = [
+    { name: "C", frequency: 261.63 },
+    { name: "C#", frequency: 277.18 },
+    { name: "D", frequency: 293.66 },
+    { name: "D#", frequency: 311.13 },
+    { name: "E", frequency: 329.63 },
+    { name: "F", frequency: 349.23 },
+    { name: "F#", frequency: 369.99 },
+    { name: "G", frequency: 392.0 },
+    { name: "G#", frequency: 415.3 },
+    { name: "A", frequency: 440.0 },
+    { name: "A#", frequency: 466.16 },
+    { name: "B", frequency: 493.88 },
+    { name: "C", frequency: 523.25 },
+  ];
+
+
+  notes.forEach(({ name, frequency }) => {
+    const noteButton = document.createElement("button");
+    noteButton.innerText = name;
+    noteButton.addEventListener("click", () => {
+      const now = globalAudioContext.currentTime;
+      const osc1 = globalAudioContext.createOscillator();
+      let gainNode1 = globalAudioContext.createGain();
+      const attackTime = 0.2;
+      const decayTime = 0.3;
+      const sustainLevel = 0.7;
+      const releaseTime = 0.2;
+      const duration = 1;
+
+      const adsrGain = globalAudioContext.createGain();
+      adsrGain.gain.setValueAtTime(0, 0);
+      adsrGain.gain.linearRampToValueAtTime(1, now + attackTime);
+      adsrGain.gain.linearRampToValueAtTime(
+        sustainLevel,
+        now + attackTime + decayTime
+      );
+      adsrGain.gain.setValueAtTime(sustainLevel, now + duration - releaseTime);
+      adsrGain.gain.linearRampToValueAtTime(0, now + duration);
+
+      osc1.type = "sawtooth";
+      osc1.frequency.value = frequency; 
+      osc1.connect(globalAudioContext.destination);
+      
+      gainNode1.connect(globalAudioContext.destination);
+      gainNode1.gain.value = 0.5; 
+      osc1.start(now);
+      osc1.stop(now + 1);
+      osc1.connect(adsrGain);
+      adsrGain.connect(analyser)
+      adsrGain.connect(primaryGainControl);
+
+    });
+    document.body.appendChild(noteButton);
+  });
+
+
+
+// function playNote(noteFrequency){
+//     console.log(noteFrequency);
+//     oscillator1 = context.createOscillator();
+//     oscillator2 = context.createOscillator();
+//     oscillator3 = context.createOscillator();
+    
+//     gainNode1 = context.createGain();
+//     gainNode2 = context.createGain();
+//     gainNode3 = context.createGain();
+    
+    
+//     oscillator1.type = "sawtooth";
+//     oscillator1.frequency.value = noteFrequency; 
+//     oscillator1.connect(context.destination);
+//     gainNode1.connect(context.destination);
+//     gainNode1.gain.value = 0.5; 
+    
+//     oscillator2.type = "square"; 
+//     oscillator2.frequency.value = 444; 
+//     oscillator2.connect(gainNode2); 
+//     gainNode2.connect(context.destination); 
+//     gainNode2.gain.value = 0.3; 
+     
+    
+//     oscillator3.type = "triangle"; 
+//     oscillator3.frequency.value = 50;
+//     oscillator3.connect(gainNode3); 
+//     gainNode3.connect(context.destination); 
+//     gainNode3.gain.value = 0.4;       
+//     oscillator1.start(0);
+//     oscillator1.stop(0.2);   
+// }
+
+
+
+/////////////////////
+
+startButton.addEventListener('click',makesoundtwo)
+stopButton.addEventListener('click',stopMakingSound)
+
+// document.addEventListener('keyup', stopMakingSound);
+
+
+// function makesoundtwo(e) {
+
+//     // console.log(e.target.dataset.note); 
+//     var freq = e.target.dataset.frequency;
+//     var note = e.target.dataset.note;
+//     osc1 = globalAudioContext.createOscillator();
+    
+//     gainNode1 = globalAudioContext.createGain();
+    
+//     osc1.type = "sawtooth";
+//     osc1.frequency.value = freq; 
+//     osc1.connect(globalAudioContext.destination);
+//     osc1.connect(analyser);
+//     gainNode1.connect(globalAudioContext.destination);
+//     gainNode1.gain.value = 0.5; 
+      
+//     osc1.start(0);
+//     osc1.stop(globalAudioContext.currentTime + 0.1);
+// }
+
+
+
+
+
+function makesound(e) {
+    // console.log(e.target.dataset.note); 
+    var freq = e.target.dataset.frequency;
+    var note = e.target.dataset.note;
+    switch (note) {
+                 case 'A4': // Q
+                    playNote(freq);
+                 break;
+                 case 'C4': // W
+                    playNote(freq);
+                 break;
+            }
+  pressedKey.innerHTML = e.key;
+}
