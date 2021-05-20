@@ -21,8 +21,8 @@ app.get('/', (req, res) => {
       Amplify.Auth.federatedSignIn().then(cred => {
         return Amplify.Auth.currentCredentials();
       }).then(u => {
-        user = u;
-        console.log(u);
+        user = u.sessionToken;
+        console.log("Token:" + u.sessionToken);
       }).catch(e => {
         res.render("failed to login. f5");
       });
