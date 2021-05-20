@@ -26,11 +26,7 @@ app.use(express.static("audio"));
 app.use(auth(config));
 
 app.get('/', (req, res) => {
-    if (!req.oidc.isAuthenticated()) {
-       res.render('pages/landing');
-    } else {
-      res.render("pages/index");
-    }
+  res.render('pages/landing');
 });
 
 app.get('/profile', requiresAuth(), (req, res) => {
@@ -38,7 +34,7 @@ app.get('/profile', requiresAuth(), (req, res) => {
 });
 
 app.get('/callback', (req, res) => {
-  res.redirect("/");
+  res.render("pages/index");
 });
 
 app.get('/logout', (req, res) => {
