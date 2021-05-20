@@ -41,6 +41,10 @@ app.get('/callback', (req, res) => {
   res.redirect("/");
 });
 
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
 app.listen(port, () => {
 
     console.log('Server is listening on port 3000');
