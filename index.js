@@ -21,7 +21,7 @@ const config = {
 let app = express();
 //const inports = require("data/testdata.json");
 
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 4000;
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -36,13 +36,17 @@ app.use(express.static("audio"));
 
 app.use(express.static("assets"));
 
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
 app.get('/', (req, res) => {
-    res.render('pages/landing');
+    res.redirect("/synth");
+});
+
+app.get("/synth", requiresAuth(), (req, res) => {
+    res.render("pages/index");
 });
 
 // TODO use correct request method needs to be PUT
