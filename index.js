@@ -28,6 +28,8 @@ app.use(auth(config));
 app.get('/', (req, res) => {
     if (!req.oidc.isAuthenticated()) {
        res.render("Please login");
+    } else {
+      res.render("pages/index");
     }
 });
 

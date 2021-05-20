@@ -10,6 +10,7 @@
     "engins": {
         "node": "15.5.0"
     },
+    "homepage": "https://photosynthesynth.herokuapp.com/login",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/kristel-tech/photosynthesis.git"
