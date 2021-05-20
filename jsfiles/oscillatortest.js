@@ -42,18 +42,19 @@ const keys = [
   }, false);
 
 
+  let adsrEnvelope = globalAudioContext.createGain();
+  let osc1 = globalAudioContext.createOscillator();
+
   keys.forEach(({ name, frequency }) => {
     const noteButton = document.createElement("button");
     noteButton.innerText = name;
     noteButton.className = "key__div key-black__div";
     noteButton.addEventListener("click", () => {
       const now = globalAudioContext.currentTime;
-      const osc1 = globalAudioContext.createOscillator();
-       
-      osc1.type = "triangle";
-      osc1.frequency.value = frequency; 
-     
-      let adsrEnvelope = globalAudioContext.createGain();
+
+       osc1 = globalAudioContext.createOscillator();
+       adsrEnvelope = globalAudioContext.createGain();
+
       adsrEnvelope.gain.cancelScheduledValues(now);
       adsrEnvelope.gain.setValueAtTime(0, now);
       //attack
@@ -61,20 +62,35 @@ const keys = [
       //release
       adsrEnvelope.gain.linearRampToValueAtTime(0, now + sustain - releaseTime);
 
+      osc1.type = "triangle";
+      osc1.frequency.value = frequency; 
+     
+     
+
+
       const lfo = globalAudioContext.createOscillator();
       lfo.type = 'square';
-      lfo.frequency.value = 10;
+      lfo.frequency.value = 1;
 
       let pulseTime = 1;
-      lfo.connect(adsrEnvelope.gain);
-      lfo.start();
+      // lfo.connect(adsrEnvelope.gain.setValueAtTime(0, now));
+      // lfo.start();
       // osc.stop(time + pulseTime);
 
       osc1.connect(adsrEnvelope).connect(globalAudioContext.destination);
       osc1.start(now);
-      osc1.stop(now + sustain);
+      osc1.stop(now + 1);
+
 
     });
     document.getElementById('newKeyboard').appendChild(noteButton)
     // document.body.appendChild(noteButton);
   });
+
+  document.getElementById('stopIt').addEventListener('click',stopOsc)
+
+  function stopOsc(){
+    osc1.stop(now);
+    adsrEnvelope.cancelScheduledValues(now);
+
+  } 
