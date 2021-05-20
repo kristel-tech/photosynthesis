@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const { auth, requiresAuth } = require('express-openid-connect');
-const { requiresAuth } = require('express-openid-connect');
 
 const config = {
   authRequired: true,
