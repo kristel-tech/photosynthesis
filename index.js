@@ -1,17 +1,17 @@
 const express = require('express');
 const connect = require("./database/databasesetup.js");
 const path = require('path');
-const { auth, requiresAuth } = require('express-openid-connect');
+// const { auth, requiresAuth } = require('express-openid-connect');
 let app = express();
 
-const config = {
-    authRequired: true,
-    auth0Logout: true,
-    secret: 'a long, randomly-generated string stored in env',
-    baseURL: 'https://photosynthesynth.herokuapp.com',
-    clientID: 'C9v7Jr7OGbnCvllmy5LqXtXadkISa59m',
-    issuerBaseURL: 'https://dev-70k6l87u.us.auth0.com'
-};
+// const config = {
+//     authRequired: true,
+//     auth0Logout: true,
+//     secret: 'a long, randomly-generated string stored in env',
+//     baseURL: 'https://photosynthesynth.herokuapp.com',
+//     clientID: 'C9v7Jr7OGbnCvllmy5LqXtXadkISa59m',
+//     issuerBaseURL: 'https://dev-70k6l87u.us.auth0.com'
+// };
 
 
 let port = process.env.PORT || 3000;
@@ -31,7 +31,7 @@ app.use(express.static("assets"));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use(auth(config));
+// app.use(auth(config));
 
 app.get('/', (req, res) => {
 
@@ -73,13 +73,13 @@ app.put('/deleteconfig', (req, res) => {
 
 
 
-app.get("/synth", requiresAuth(), (req, res) => {
-    res.render("pages/index");
-});
+// app.get("/synth", requiresAuth(), (req, res) => {
+//     res.render("pages/index");
+// });
 
-app.get('/profile', requiresAuth(), (req, res) => {
-    res.send(JSON.stringify(req.oidc.user));
-});
+// app.get('/profile', requiresAuth(), (req, res) => {
+//     res.send(JSON.stringify(req.oidc.user));
+// });
 
 app.get('/callback', (req, res) => {
     res.redirect("/synth");
