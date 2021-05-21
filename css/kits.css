@@ -99,7 +99,6 @@ user-select:text;
 }
 
 .main-container > canvas{
-    background: white;
     width:100%;
     height: 100%;
     position: relative;
