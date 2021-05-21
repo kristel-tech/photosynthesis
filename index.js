@@ -35,9 +35,8 @@ app.use(auth(config));
 
 app.get('/', (req, res) => {
 
-    res.redirect("/synth");
+    res.render("pages/index");
 });
-
 
 // TODO use correct request method needs to be PUT
 app.put('/addconfig', requiresAuth(),  (req, res) => {
@@ -63,17 +62,13 @@ app.put('/deleteconfig', requiresAuth(), (req, res) => {
     dbconnectinst.DeleteConfigData(req, res, '/deleteconfig');
 });
 
-
-
-
-
 app.get("/synth", requiresAuth(), (req, res) => {
     res.render("pages/index");
 });
 
-app.get('/profile', requiresAuth(), (req, res) => {
-    res.send(JSON.stringify(req.oidc.user));
-});
+// app.get('/profile', requiresAuth(), (req, res) => {
+//     res.send(JSON.stringify(req.oidc.user));
+// });
 
 app.get('/callback', (req, res) => {
     res.redirect("/synth");
@@ -85,6 +80,6 @@ app.get('/logout', (req, res) => {
 });
 
 app.listen(port, () => {
-
-    console.log('Server is listening on port 3000');
+    console.log('Server is listening on port ' +
+        port);
 });
