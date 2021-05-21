@@ -19,61 +19,47 @@
         <section class="main-container">
             <canvas class="visuals" id="audio_visual"></canvas>
 
-            <div class="controls">
+            <section class="controls">
+                <label for="oscillatorWaveform">oscillator wave</label>
+                <select id="oscillatorWaveform">
+                    <option value="sine">sine</option>
+                    <option value="saw">saw</option>
+                    <option value="triangle">triangle</option>
+                    <option value="square">square</option>
+                </select>
+                <label for="lfoWaveform">lfo wave</label>
+                <select id="lfoWaveform">
+                    <option value="sine">sine</option>
+                    <option value="saw">saw</option>
+                    <option value="triangle">triangle</option>
+                    <option value="square">square</option>
+                </select>
+                <label for="filterWaveform">filterTYpe</label>
+                <select id="filterWaveform">
+                    <option value="highpass">highpass</option>
+                    <option value="bandpass">bandpass</option>
+                    <option value="lowpass">lowpass</option>
+                </select>
                 <label for="Attack">Attack</label>
                 <input name="Attack" id="Attack" type="range" min="0" max="1" value="0.2" step="0.1" />
                 <label for="Release">Decay</label>
                 <input name="Release" id="Release" type="range" min="0" max="1" value="0.5" step="0.1" />
                 <label for="detuneSlider">detune</label>
                 <input type="range" min="0" max="100" value="0" class="slider" id="detuneSlider" step="1">
-            </div>
-            <div class="volumes">
-                <input id="lfo-speed"type="range" data-title="LFO Speed" orient="vertical" /><br/>
-                <input id="fx1" type="range" data-title="FX1" orient="vertical" /><br/>
+            </section>
+            <section class="volumes">
+                <input id="lfofrequencySLider" type="range" data-title="LFO Speed" orient="vertical" min="0" max="300" step="1" value="0"/><br/>
+                <input id="filterfrequencySLider" type="range" data-title="filter frequency" orient="vertical" min="0" max="10000" value="500"/><br/>
                 <input id="fx2" type="range" data-title="FX2" orient="vertical" /><br/>
                 <input id="four" type="range" data-title="four" orient="vertical" /><br/>
                 <input id="five" type="range" data-title="five" orient="vertical" /><br/>
-            </div>
-            <div id="newKeyboard"></div>
-            </div>
+            </section>
+            <section id="newKeyboard"></section>
+       
         </section>
 
         <!-- visualizer-->
         <canvas id="audio_visual" height="500" width="1000"></canvas>
-
-        <!-- <audio id="myAudio" controls preload="none" src="/SineWave100hz.mp3" type="audio/mp3"></audio>
-        <input list="wavetypes" name="wavetypes" id="wavetype" onchange="setaudiosource()">
-        <datalist id="wavetypes">
-          <option value="sine"></option>
-          <option value="saw"></option>
-          <option value="triangle"></option>
-          <option value="square"></option>
-        </datalist> -->
-
-        
-        <!-- oscialltor-->
-        <section>
-            <select id="oscillatorWaveform">
-                <option value="sine">sine</option>
-                <option value="saw">saw</option>
-                <option value="triangle">triangle</option>
-                <option value="square">square</option>
-            </select>
-            <h2>OSCI_LATER</h1>
-            <article>
-                <label for="Attack">Attack</label>
-                <input name="Attack" id="Attack" type="range" min="0" max="1" value="0.0" step="0.1" />
-                <label for="Release">Decay</label>
-                <input name="Release" id="Release" type="range" min="0" max="1" value="0.5" step="0.1" />
-                <label for="Sustain">Sustain</label>
-                <input type="range" min="0.0" max="3.0" value="0" class="slider" id="Sustain">
-            </article>
-
-            <article id="newKeyboard">
-
-            </article>
-
-        </section>
     </main>
 
     <footer>
@@ -81,28 +67,4 @@
     </footer>
     <script type="text/javascript" src="/oscillatortest.js"></script>
 </body>
-<script>
-    function setaudiosource() {
-        var wavetype = document.getElementById("wavetype");
-        var audioplayer = document.getElementById("myAudio");
-        var strUser = wavetype.value;
-        switch (strUser) {
-            case 'saw':
-                audioplayer.src = 'SawToothWave100hz.mp3';
-                break;
-            case 'sine':
-                audioplayer.src = 'SineWave100hz.mp3';
-                break;
-            case 'square':
-                audioplayer.src = 'SquareWave500hz.mp3';
-                break;
-            case 'triangle':
-                audioplayer.src = 'TraingleWave100hz.mp3';
-                break;
-        }
-    }
-</script>
-<!-- <script src="/osiloscopecode.js"></script> -->
-<!-- <script src="/oscillatortest.js"></script> -->
-
 </html>

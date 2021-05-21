@@ -60,7 +60,8 @@ class Synthesizer {
   }
 }
 
-// EVENT LISTENERS////////////////////
+
+
   attackControl.addEventListener('input', function() {
       attackTime = Number(this.value);
   }, false);
@@ -76,6 +77,22 @@ class Synthesizer {
   detuneValueSlider.addEventListener("change", function(e){
     detuneValue = e.target.value;
   });
+
+  lfoTypeSelect.addEventListener("change",function(e){
+    lfoType = e.target.value;
+  });
+
+  lfoFrequencySlider.addEventListener("change",function(e){
+    lfoFrequency = e.target.value;
+  });
+
+filterTypeSelect.addEventListener("change",function(e){
+  filterType = e.target.value;
+});
+
+filterFrequencySlider.addEventListener("change",function(e){
+  filterFrequency = e.target.value;
+});
 
 
   let adsrEnvelope = globalAudioContext.createGain();
@@ -111,19 +128,9 @@ class Synthesizer {
 
       osc1.oscillator_one.connect(adsrEnvelope).connect(filter).connect(globalAudioContext.destination);
       osc1.playNote(adsrEnvelope);
-      // osc1.stopNote(adsrEnvelope);
     });
     document.getElementById('newKeyboard').appendChild(noteButton)
-    // document.body.appendChild(noteButton);
   });
-
-  document.getElementById('stopIt').addEventListener('click',stopOsc)
-
-  function stopOsc(){
-    osc1.stop(now);
-    adsrEnvelope.cancelScheduledValues(now);
-
-  } 
 
   function loadConfig(){
     //change values for all parameters on screen
