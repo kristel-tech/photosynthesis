@@ -40,31 +40,25 @@ app.get('/', (req, res) => {
 
 
 // TODO use correct request method needs to be PUT
-app.put('/addconfig', (req, res) => {
-    let dbconnectinst = new connect();
-    dbconnectinst.SetConfigData(req, res, '/addconfig');
-});
-
-// TODO use correct request method needs to be PUT
-app.put('/addconfig', (req, res) => {
+app.put('/addconfig', requiresAuth(),  (req, res) => {
     let dbconnectinst = new connect();
     dbconnectinst.SetConfigData(req, res, '/addconfig');
 });
 
 // TODO use correct request method needs to be POST
-app.post('/getconfig', (req, res) => {
+app.post('/getconfig', requiresAuth(), (req, res) => {
     let dbconnectinst = new connect();
     dbconnectinst.GetConfigData(req, res, '/getconfig');
 });
 
 // TODO use correct request method needs to be PUT
-app.post('/updateconfig', (req, res) => {
+app.post('/updateconfig', requiresAuth(), (req, res) => {
     let dbconnectinst = new connect();
     dbconnectinst.UpdateConfigData(req, res, '/updateconfig');
 });
 
 // TODO use correct request method needs to be DELETE
-app.put('/deleteconfig', (req, res) => {
+app.put('/deleteconfig', requiresAuth(), (req, res) => {
     let dbconnectinst = new connect();
     dbconnectinst.DeleteConfigData(req, res, '/deleteconfig');
 });
