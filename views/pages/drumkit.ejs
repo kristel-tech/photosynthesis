@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <section>
+      <h2 class="text-center">Drum Machine</h2>
+      <button onclick="playTrack()" class="play-button">Play</button> | <button onclick="pausePlayingAudio" class="pause-button">Pause</button>
+      <table>
+        <tbody>
+          <tr>
+            <td>Tom 1</td>
+            <td>
+              <button onclick="selectElementToPlay(1)" id="b1" class="not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(2)" id="b2" class="not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(3)" id="b3" class="not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(4)" id="b4" class="not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(5)" id="b5" class="not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(6)" id="b6" class="not-selected"> 0 </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Tom 2</td>
+            <td>
+              <button onclick="selectElementToPlay(7)" id="b7" class="not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(8)" id="b8" class="not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(9)" id="b9" class="not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(10)" id="b10" class="not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(11)" id="b11" class="not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(12)" id="b12" class="not-selected"> 0 </button>
+            </td>
+          <tr>
+            <td>Hi Hat</td>
+            <td>
+              <button onclick="selectElementToPlay(13)" id="b13" class="class0 not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(14)" id="b14" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(15)" id="b15" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(16)" id="b16" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(17)" id="b17" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(18)" id="b18" class="classO not-selected"> 0 </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Snare</td>
+            <td>
+              <button onclick="selectElementToPlay(19)" id="b19" class="class0 not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(20)" id="b20" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(21)" id="b21" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(22)" id="b22" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(23)" id="b23" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(24)" id="b24" class="classO not-selected"> 0 </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Kick</td>
+            <td>
+              <button onclick="selectElementToPlay(25)" id="b25" class="class0 not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(26)" id="b26"  id="b26" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(27)" id="b27" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(28)" id="b28" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(29)"  id="b29" class="classO not-selected"> 0 </button>
+            </td>
+            <td>
+              <button onclick="selectElementToPlay(30)" id="b30" class="classO not-selected"> 0 </button>
+            </td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <script>
+
+      function pausePlayingAudio() {
+        window.location.reload();
+      }
+
+      function playAudio(audioPath) {
+        const audio = new Audio(audioPath);
+        audio.play();
+      }
+
+      function playSelectedElement(selectKeyIdentifier) {
+        let audioPath = "sound/";
+
+        if (selectKeyIdentifier >= 1 && selectKeyIdentifier <= 6) {
+          playAudio(audioPath + "tom1.wav");
+        }
+
+        if (selectKeyIdentifier >= 7 && selectKeyIdentifier <= 12) {
+          playAudio(audioPath + "tom2.wav");
+        }
+
+        if (selectKeyIdentifier >= 13 && selectKeyIdentifier <= 18) {
+          playAudio(audioPath + "tom3.wav");
+        }
+
+        if (selectKeyIdentifier >= 19 && selectKeyIdentifier <= 24) {
+          playAudio(audioPath + "hihat.wav");
+        }
+
+        if (selectKeyIdentifier >= 25 && selectKeyIdentifier <= 30) {
+          playAudio(audioPath + "snare.wav");
+        }
+
+        if (selectKeyIdentifier >= 31 && selectKeyIdentifier <= 36) {
+          playAudio(audioPath + "kick.wav");
+        }
+
+      }
+
+      function selectElementToPlay(selectKeyIdentifier) {
+        const soundButton = document.getElementById('b' + selectKeyIdentifier);
+        
+        if (!soundButton.classList.contains('not-selected')) {
+          soundButton.classList.add('not-selected');  
+          return ;
+        }
+
+        soundButton.classList.remove('not-selected');
+        
+        playSelectedElement(selectKeyIdentifier);
+      }
+
+      function playTrack() {
+
+        setInterval(() => console.log("Tom 1") ,  6000);
+        setInterval(() => console.log("Tom 2") ,  7000);
+        setInterval(() => console.log("Snare") ,  9000);
+        setInterval(() => console.log("Kick") , 10000);
+      }
+
+    </script>
+  </body>
+</html>

@@ -85,6 +85,11 @@ app.get('/callback', (req, res) => {
     res.redirect("/synth");
 });
 
+app.get('/drumkit', (req, res) => {
+
+    res.redirect("/pages/drumkit");
+});
+
 app.get('/logout', (req, res) => {
     req.logout();
     res.redirect("/");
