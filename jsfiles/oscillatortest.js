@@ -28,19 +28,19 @@ let lfoFrequency = 0; //slider range 0 - 200hz step: 1hz
 let lfoFrequencySlider = document.querySelector('#lfofrequencySLider'); 
 
 const keys = [
-  { name: "C", frequency: 261.63 },
-  { name: "C#", frequency: 277.18 },
-  { name: "D", frequency: 293.66 },
-  { name: "D#", frequency: 311.13 },
-  { name: "E", frequency: 329.63 },
-  { name: "F", frequency: 349.23 },
-  { name: "F#", frequency: 369.99 },
-  { name: "G", frequency: 392.0 },
-  { name: "G#", frequency: 415.3 },
-  { name: "A", frequency: 440.0 },
-  { name: "A#", frequency: 466.16 },
-  { name: "B", frequency: 493.88 },
-  { name: "C", frequency: 523.25 },
+  { name: "C", frequency: 261.63, sharpNote: false },
+  { name: "C#", frequency: 277.18, sharpNote: true },
+  { name: "D", frequency: 293.66, sharpNote: false },
+  { name: "D#", frequency: 311.13, sharpNote: true },
+  { name: "E", frequency: 329.63, sharpNote: false },
+  { name: "F", frequency: 349.23, sharpNote: false },
+  { name: "F#", frequency: 369.99, sharpNote: true },
+  { name: "G", frequency: 392.0, sharpNote: false },
+  { name: "G#", frequency: 415.3, sharpNote: true },
+  { name: "A", frequency: 440.0, sharpNote: false },
+  { name: "A#", frequency: 466.16, sharpNote: true },
+  { name: "B", frequency: 493.88, sharpNote: true },
+  // { name: "C", frequency: 523.25, sharpNote: true }
 ];
 class Synthesizer {
   constructor(waveform,oscfreq,dechune) {
@@ -80,11 +80,18 @@ class Synthesizer {
 
   let adsrEnvelope = globalAudioContext.createGain();
   let osc1 = globalAudioContext.createOscillator();
+  let sharpKeyCounter = 0, flatKeyCounter = 0;
 
-  keys.forEach(({ name, frequency }) => {
-    const noteButton = document.createElement("button");
+  keys.forEach(({ name, frequency, sharpNote }) => {
+    // const noteButton = document.createElement("button");
+    const noteButton = document.createElement("div");
     noteButton.innerText = name;
     noteButton.className = "piano-keys";
+    noteButton.classList.add("key__div");
+    noteButton.classList.add(sharpNote ? "key-black__div" : "key-white__div");
+    noteButton.setAttribute("style", "top: -" + (sharpNote ? (4.11 + sharpKeyCounter*8.22) : (flatKeyCounter*8.22)) + "%;");
+    sharpKeyCounter += sharpNote;
+    flatKeyCounter += sharpNote;
     noteButton.addEventListener("click", () => {
     const now = globalAudioContext.currentTime;
 

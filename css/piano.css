@@ -1,9 +1,3 @@
-
-
-.key-none__div {
-    height: 7%;
-}
-
 .key__div:hover {
     background-color: rgb(139, 139, 139);
 }
@@ -31,6 +25,6 @@
 }
 
 #piano {
-    width: 800px;
+    width: 500px;
     height: 400px;
 }

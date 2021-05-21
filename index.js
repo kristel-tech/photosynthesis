@@ -12,6 +12,7 @@ app.use(express.static("css"));
 
 app.get('/', (req, res) => {
     res.render("pages/index");
+    // res.render("pages/oscillator");
 });
 
 
