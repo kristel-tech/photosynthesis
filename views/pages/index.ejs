@@ -15,33 +15,48 @@
     <main>
 
 
-        <%- include('../partials/osiloscopecode'); %>
-
-            <%- include( '../partials/presetsconfigs'); %>
-
-                <canvas id="audio_visual" height="500" width="1000" onload="auth"></canvas>
 
 
-                <form>
-                    <input name="x" id="x" type="text">
-                    <input name="y" id="y" type="text">
-                    <input name="z" id="z" type="text">
-                    <input name="t" id="t" type="text">
-                    <input name="j" id="j" type="text">
-                    <input name="k" id="k" type="text">
-                </form>
+        <%- include( '../partials/presetsconfigs'); %>
 
-                <input type="button" onclick="SetConfigName()" value="test this">
-                <input list="wavetypes " name="wavetypes " id="wavetype " onchange="setaudiosource()">
-                <datalist id="wavetypes ">
+            <section>
+                <canvas id="audio_visual" height="500" width="1000"></canvas>
+                <article>
+                    <label for="Attack">Attack</label>
+                    <input name="Attack" id="Attack" type="range" min="0" max="1" value="0.2" step="0.1" />
+                    <label for="Release">Decay</label>
+                    <input name="Release" id="Release" type="range" min="0" max="1" value="0.5" step="0.1" />
+                    <label for="Sustain">Sustain</label>
+                    <input type="range" min="0.0" max="3.0" value="0" class="slider" id="Sustain">
+                    <button id="stopIt">STOPIT</button>
+                </article>
+
+                <article id="newKeyboard">
+
+                </article>
+
+            </section>
+
+            <form>
+                <input name="x" id="x" type="text">
+                <input name="y" id="y" type="text">
+                <input name="z" id="z" type="text">
+                <input name="t" id="t" type="text">
+                <input name="j" id="j" type="text">
+                <input name="k" id="k" type="text">
+            </form>
+
+
+            <input list="wavetypes " name="wavetypes " id="wavetype " onchange="setaudiosource()">
+            <datalist id="wavetypes ">
           <option value="sine "></option>
           <option value="saw "></option>
           <option value="triangle "></option>
           <option value="square "></option>
         </datalist>
-                <form action="https://photosynthesynth.herokuapp.com/logout">
-                    <input type="submit" value="Sign Out" />
-                </form>
+            <form action="https://photosynthesynth.herokuapp.com/logout">
+                <input type="submit" value="Sign Out" />
+            </form>
 
     </main>
 
@@ -100,29 +115,10 @@
             })
     }
 </script>
-<script>
-    function setaudiosource() {
-        var wavetype = document.getElementById("wavetype ");
-        var audioplayer = document.getElementById("myAudio ");
-        var strUser = wavetype.value;
-        switch (strUser) {
-            case 'saw':
-                audioplayer.src = 'SawToothWave100hz.mp3';
-                break;
-            case 'sine':
-                audioplayer.src = 'SineWave100hz.mp3';
-                break;
-            case 'square':
-                audioplayer.src = 'SquareWave500hz.mp3';
-                break;
-            case 'triangle':
-                audioplayer.src = 'TraingleWave100hz.mp3';
-                break;
-        }
-    }
-</script>
-<script src="/osiloscopecode.js "></script>
-<script src="/presetsconfigs.js "></script>
+
+<script type="text/javascript" src="/oscillatortest.js"></script>
+<script type="text/javascript" src="/osiloscopecode.js"></script>
+<script type="text/javascript" src="/presetsconfigs.js"></script>
 
 </html>
 
