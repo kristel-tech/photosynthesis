@@ -5,7 +5,7 @@ const { auth, requiresAuth } = require('express-openid-connect');
 let app = express();
 
 const config = {
-    authRequired: false,
+    authRequired: true,
     auth0Logout: true,
     secret: 'a long, randomly-generated string stored in env',
     baseURL: 'https://photosynthesynth.herokuapp.com',
