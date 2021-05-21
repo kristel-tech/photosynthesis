@@ -87,6 +87,22 @@ class Synthesizer {
     detuneValue = e.target.value;
   });
 
+lfoTypeSelect.addEventListener("change",function(e){
+    lfoType = e.target.value;
+  });
+
+  lfoFrequencySlider.addEventListener("change",function(e){
+    lfoFrequency = e.target.value;
+  });
+
+filterTypeSelect.addEventListener("change",function(e){
+  filterType = e.target.value;
+});
+
+filterFrequencySlider.addEventListener("change",function(e){
+  filterFrequency = e.target.value;
+});
+
 
   let adsrEnvelope = globalAudioContext.createGain();
   let osc1 = globalAudioContext.createOscillator();
