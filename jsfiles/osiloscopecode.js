@@ -11,7 +11,7 @@ let attackControl = document.querySelector('#Attack');
 let releaseControl = document.querySelector('#Release');
 
 // oscillator
-let oscillatorOneWaveShape = "sawtooth";  //add eventlistener delete comment might delete whole line
+let oscillatorOneWaveShape = "sine";  //add eventlistener delete comment might delete whole line
 let oscillatorOneWaveShapeSelect = document.querySelector('#oscillatorWaveform');
 let detuneValue = 0; //slider range 0 - 100 steps:1
 let detuneValueSlider = document.querySelector('#detuneSlider');
@@ -31,33 +31,36 @@ let lfoFrequency = 0; //slider range 0 - 200hz step: 1hz
 let lfoFrequencySlider = document.querySelector('#lfofrequencySLider'); 
 
 const keys = [
-  { name: "C", frequency: 261.63 },
-  { name: "C#", frequency: 277.18 },
-  { name: "D", frequency: 293.66 },
-  { name: "D#", frequency: 311.13 },
-  { name: "E", frequency: 329.63 },
-  { name: "F", frequency: 349.23 },
-  { name: "F#", frequency: 369.99 },
-  { name: "G", frequency: 392.0 },
-  { name: "G#", frequency: 415.3 },
-  { name: "A", frequency: 440.0 },
-  { name: "A#", frequency: 466.16 },
-  { name: "B", frequency: 493.88 },
-  { name: "C", frequency: 523.25 },
+  { name: "C", frequency: 261.63, sharpNote: false },
+  { name: "C#", frequency: 277.18, sharpNote: true },
+  { name: "D", frequency: 293.66, sharpNote: false },
+  { name: "D#", frequency: 311.13, sharpNote: true },
+  { name: "E", frequency: 329.63, sharpNote: false },
+  { name: "F", frequency: 349.23, sharpNote: false },
+  { name: "F#", frequency: 369.99, sharpNote: true },
+  { name: "G", frequency: 392.0, sharpNote: false },
+  { name: "G#", frequency: 415.3, sharpNote: true },
+  { name: "A", frequency: 440.0, sharpNote: false },
+  { name: "A#", frequency: 466.16, sharpNote: true },
+  { name: "B", frequency: 493.88, sharpNote: true },
+  // { name: "C", frequency: 523.25, sharpNote: true }
 ];
 class Synthesizer {
-  constructor(waveform,oscfreq,dechune,analyser,data) {
-      this.data = data;
-      this.analyser = analyser;
+  constructor(waveform,oscfreq,dechune) {
+
+    this.analyser = globalAudioContext.createOscillator();;
     this.oscillator_one = globalAudioContext.createOscillator();
+    this.analyser = globalAudioContext.createAnalyser();
+    this.analyser.fftSize = 2048;
+    this.data = new Uint8Array(this.analyser.frequencyBinCount);
     this.oscillator_one.type = waveform;
     this.oscillator_one.frequency.value = oscfreq;
     this.oscillator_one.detune.setValueAtTime(dechune, globalAudioContext.currentTime);
   }
   playNote(gainNode){
     this.oscillator_one.start(globalAudioContext.currentTime);
-    this.analyser.getByteTimeDomainData(data); 
-    draw(data);
+    this.analyser.getByteTimeDomainData(this.data); 
+    draw(this.data);
     // this.oscillator_one.stop(globalAudioContext.currentTime + sustain);
     // gainNode.gain.linearRampToValueAtTime(0,globalAudioContext.currentTime + sustain);
   }
@@ -87,20 +90,26 @@ class Synthesizer {
 
   let adsrEnvelope = globalAudioContext.createGain();
   let osc1 = globalAudioContext.createOscillator();
-  let data = new Uint8Array(analyser.frequencyBinCount);
-requestAnimationFrame(loopingFunction);
-  let analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 2048;
+  let sharpKeyCounter = 0, flatKeyCounter = 0;
 
-  keys.forEach(({ name, frequency }) => {
-    const noteButton = document.createElement("button");
+// requestAnimationFrame(loopingFunction);
+
+
+  keys.forEach(({ name, frequency, sharpNote }) => {
+    // const noteButton = document.createElement("button");
+    const noteButton = document.createElement("div");
     noteButton.innerText = name;
     noteButton.className = "piano-keys";
+    noteButton.classList.add("key__div");
+    noteButton.classList.add(sharpNote ? "key-black__div" : "key-white__div");
+    noteButton.setAttribute("style", "top: -" + (sharpNote ? (4.11 + sharpKeyCounter*8.22) : (flatKeyCounter*8.22)) + "%;");
+    sharpKeyCounter += sharpNote;
+    flatKeyCounter += sharpNote;
     noteButton.addEventListener("click", () => {
     const now = globalAudioContext.currentTime;
 
-       osc1 = new Synthesizer(oscillatorOneWaveShape,frequency,detuneValue, analyser,data);
-       adsrEnvelope = globalAudioContext.createGain();
+      osc1 = new Synthesizer(oscillatorOneWaveShape,frequency,detuneValue);
+      adsrEnvelope = globalAudioContext.createGain();
 
       adsrEnvelope.gain.cancelScheduledValues(now);
       adsrEnvelope.gain.setValueAtTime(0, now);
@@ -112,7 +121,7 @@ requestAnimationFrame(loopingFunction);
       let filter = globalAudioContext.createBiquadFilter();
       filter.type = filterType;
       filter.frequency.value = filterFrequency;
-     
+    
       let lfo = globalAudioContext.createOscillator();
       lfo.type = lfoType;
       lfo.frequency.value = lfoFrequency;
@@ -120,7 +129,7 @@ requestAnimationFrame(loopingFunction);
       lfo.connect(adsrEnvelope.gain);
       lfo.start();
 
-      osc1.oscillator_one.connect(adsrEnvelope).connect(filter).connect(analyser).connect(globalAudioContext.destination);
+      osc1.oscillator_one.connect(adsrEnvelope).connect(filter).connect(globalAudioContext.destination);
       osc1.playNote(adsrEnvelope);
       // osc1.stopNote(adsrEnvelope);
     });
@@ -128,16 +137,20 @@ requestAnimationFrame(loopingFunction);
     // document.body.appendChild(noteButton);
   });
 
+  requestAnimationFrame(loopingFunction);
+
   function loopingFunction() {
     requestAnimationFrame(loopingFunction);
-    analyser.getByteTimeDomainData(data);
-    draw(data);
+    if (osc1.analyser != null){
+      osc1.analyser.getByteTimeDomainData(osc1.data);
+      draw(osc1.data);
+    }
 }
 
 function draw(data) {
+  console.log(data.length)
     data = [...data];
-    if (!!audioElement.paused)
-        return
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let space = canvas.width / data.length;
     let start = true;
@@ -159,7 +172,14 @@ function draw(data) {
 
   } 
 
-  function loadConfig(){
-    //change values for all parameters on screen
-
-  }
+// function saveConfig() {
+//   // attackTime
+//   // releaseTime
+//   // oscillatorOneWaveShape
+//   // detuneValue
+//   // filterType
+//   // filterFrequency
+//   // lfoType
+//   // lfoFrequency
+//   }
+ 
