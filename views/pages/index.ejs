@@ -2,8 +2,16 @@
 <html lang="en">
 
 <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <%- include('../partials/head'); %>
 
+
+    <link rel="stylesheet" type="text/css" href="/kits.css">
+    <link rel="stylesheet" type="text/css" href="/piano.css"/>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
 </head>
 
 <body class="container">
@@ -13,29 +21,54 @@
     </header>
 
     <main>
+        <section class="main-container">
+            <canvas class="visuals" id="audio_visual"></canvas>
+
+            <section class="controls">
+                <label for="oscillatorWaveform">oscillator wave</label>
+                <select id="oscillatorWaveform">
+                    <option value="sine">sine</option>
+                    <option value="saw">saw</option>
+                    <option value="triangle">triangle</option>
+                    <option value="square">square</option>
+                </select>
+                <label for="lfoWaveform">lfo wave</label>
+                <select id="lfoWaveform">
+                    <option value="sine">sine</option>
+                    <option value="saw">saw</option>
+                    <option value="triangle">triangle</option>
+                    <option value="square">square</option>
+                </select>
+                <label for="filterWaveform">filterTYpe</label>
+                <select id="filterWaveform">
+                    <option value="highpass">highpass</option>
+                    <option value="bandpass">bandpass</option>
+                    <option value="lowpass">lowpass</option>
+                </select>
+                <label for="Attack">Attack</label>
+                <input name="Attack" id="Attack" type="range" min="0" max="1" value="0.2" step="0.1" />
+                <label for="Release">Decay</label>
+                <input name="Release" id="Release" type="range" min="0" max="1" value="0.5" step="0.1" />
+                <label for="detuneSlider">detune</label>
+                <input type="range" min="0" max="100" value="0" class="slider" id="detuneSlider" step="1">
+            </section>
+            <section class="volumes">
+                <input id="lfofrequencySLider" type="range" data-title="LFO Speed" orient="vertical" min="0" max="300" step="1" value="0"/><br/>
+                <input id="filterfrequencySLider" type="range" data-title="filter frequency" orient="vertical" min="0" max="10000" value="500"/><br/>
+                <input id="fx2" type="range" data-title="FX2" orient="vertical" /><br/>
+                <input id="four" type="range" data-title="four" orient="vertical" /><br/>
+                <input id="five" type="range" data-title="five" orient="vertical" /><br/>
+            </section>
+            <section id="newKeyboard" class="piano"></section>
+            </section>
+        </section>
 
 
 
 
         <%- include( '../partials/presetsconfigs'); %>
 
-            <section>
-                <canvas id="audio_visual" height="500" width="1000"></canvas>
-                <article>
-                    <label for="Attack">Attack</label>
-                    <input name="Attack" id="Attack" type="range" min="0" max="1" value="0.2" step="0.1" />
-                    <label for="Release">Decay</label>
-                    <input name="Release" id="Release" type="range" min="0" max="1" value="0.5" step="0.1" />
-                    <label for="Sustain">Sustain</label>
-                    <input type="range" min="0.0" max="3.0" value="0" class="slider" id="Sustain">
-                    <button id="stopIt">STOPIT</button>
-                </article>
 
-                <article id="newKeyboard">
-
-                </article>
-
-            </section>
 
             <form>
                 <input name="x" id="x" type="text">
@@ -47,24 +80,20 @@
             </form>
 
 
-            <input list="wavetypes " name="wavetypes " id="wavetype " onchange="setaudiosource()">
-            <datalist id="wavetypes ">
-          <option value="sine "></option>
-          <option value="saw "></option>
-          <option value="triangle "></option>
-          <option value="square "></option>
-        </datalist>
+
             <form action="https://photosynthesynth.herokuapp.com/logout">
                 <input type="submit" value="Sign Out" />
             </form>
+
 
     </main>
 
     <footer>
 
     </footer>
-
+    <script type="text/javascript" src="/oscillatortest.js"></script>
 </body>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
 <script>
     var sel = document.getElementById("configs");
@@ -121,5 +150,6 @@
 <script type="text/javascript" src="/presetsconfigs.js"></script>
 
 </html>
+
 
 </html>

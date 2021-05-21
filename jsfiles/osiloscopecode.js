@@ -16,11 +16,13 @@ let oscillatorOneWaveShapeSelect = document.querySelector('#oscillatorWaveform')
 let detuneValue = 0; //slider range 0 - 100 steps:1
 let detuneValueSlider = document.querySelector('#detuneSlider');
 
+
 // filter
 let filterType = "highpass"; //select box options: "highpass", "lowpass", "bandpass"
 let filterTypeSelect = document.querySelector('#filterWaveform');
 let filterFrequencySlider = document.querySelector('#filterfrequencySLider'); //slier, range from 0 - 1000 steps:1
 let filterFrequency = 400; //slier, range from 0 - 1000 steps:1
+
 
 // lfo
 let lfoType = "sine";
