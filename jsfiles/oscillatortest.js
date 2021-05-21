@@ -86,7 +86,7 @@ class Synthesizer {
     noteButton.innerText = name;
     noteButton.className = "piano-keys";
     noteButton.addEventListener("click", () => {
-      const now = globalAudioContext.currentTime;
+    const now = globalAudioContext.currentTime;
 
        osc1 = new Synthesizer(oscillatorOneWaveShape,frequency,detuneValue);
        adsrEnvelope = globalAudioContext.createGain();
@@ -102,7 +102,7 @@ class Synthesizer {
       filter.type = filterType;
       filter.frequency.value = filterFrequency;
      
-      const lfo = globalAudioContext.createOscillator();
+      let lfo = globalAudioContext.createOscillator();
       lfo.type = lfoType;
       lfo.frequency.value = lfoFrequency;
 
