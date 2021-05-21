@@ -11,7 +11,7 @@ let attackControl = document.querySelector('#Attack');
 let releaseControl = document.querySelector('#Release');
 
 // oscillator
-let oscillatorOneWaveShape = "sawtooth";  //add eventlistener delete comment might delete whole line
+let oscillatorOneWaveShape = "sine";  //add eventlistener delete comment might delete whole line
 let oscillatorOneWaveShapeSelect = document.querySelector('#oscillatorWaveform');
 let detuneValue = 0; //slider range 0 - 100 steps:1
 let detuneValueSlider = document.querySelector('#detuneSlider');
@@ -46,18 +46,21 @@ const keys = [
   { name: "C", frequency: 523.25 },
 ];
 class Synthesizer {
-  constructor(waveform,oscfreq,dechune,analyser,data) {
-      this.data = data;
-      this.analyser = analyser;
+  constructor(waveform,oscfreq,dechune) {
+
+    this.analyser = globalAudioContext.createOscillator();;
     this.oscillator_one = globalAudioContext.createOscillator();
+    this.analyser = globalAudioContext.createAnalyser();
+    this.analyser.fftSize = 2048;
+    this.data = new Uint8Array(this.analyser.frequencyBinCount);
     this.oscillator_one.type = waveform;
     this.oscillator_one.frequency.value = oscfreq;
     this.oscillator_one.detune.setValueAtTime(dechune, globalAudioContext.currentTime);
   }
   playNote(gainNode){
     this.oscillator_one.start(globalAudioContext.currentTime);
-    this.analyser.getByteTimeDomainData(data); 
-    draw(data);
+    this.analyser.getByteTimeDomainData(this.data); 
+    draw(this.data);
     // this.oscillator_one.stop(globalAudioContext.currentTime + sustain);
     // gainNode.gain.linearRampToValueAtTime(0,globalAudioContext.currentTime + sustain);
   }
@@ -87,10 +90,9 @@ class Synthesizer {
 
   let adsrEnvelope = globalAudioContext.createGain();
   let osc1 = globalAudioContext.createOscillator();
-  let data = new Uint8Array(analyser.frequencyBinCount);
-requestAnimationFrame(loopingFunction);
-  let analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 2048;
+
+// requestAnimationFrame(loopingFunction);
+
 
   keys.forEach(({ name, frequency }) => {
     const noteButton = document.createElement("button");
@@ -99,7 +101,7 @@ requestAnimationFrame(loopingFunction);
     noteButton.addEventListener("click", () => {
     const now = globalAudioContext.currentTime;
 
-       osc1 = new Synthesizer(oscillatorOneWaveShape,frequency,detuneValue, analyser,data);
+       osc1 = new Synthesizer(oscillatorOneWaveShape,frequency,detuneValue);
        adsrEnvelope = globalAudioContext.createGain();
 
       adsrEnvelope.gain.cancelScheduledValues(now);
@@ -120,7 +122,7 @@ requestAnimationFrame(loopingFunction);
       lfo.connect(adsrEnvelope.gain);
       lfo.start();
 
-      osc1.oscillator_one.connect(adsrEnvelope).connect(filter).connect(analyser).connect(globalAudioContext.destination);
+      osc1.oscillator_one.connect(adsrEnvelope).connect(filter).connect(osc1.analyser).connect(globalAudioContext.destination);
       osc1.playNote(adsrEnvelope);
       // osc1.stopNote(adsrEnvelope);
     });
@@ -128,16 +130,20 @@ requestAnimationFrame(loopingFunction);
     // document.body.appendChild(noteButton);
   });
 
+  requestAnimationFrame(loopingFunction);
+
   function loopingFunction() {
     requestAnimationFrame(loopingFunction);
-    analyser.getByteTimeDomainData(data);
-    draw(data);
+    if (osc1.analyser != null){
+      osc1.analyser.getByteTimeDomainData(osc1.data);
+      draw(osc1.data);
+    }
 }
 
 function draw(data) {
+  console.log(data.length)
     data = [...data];
-    if (!!audioElement.paused)
-        return
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let space = canvas.width / data.length;
     let start = true;
@@ -159,7 +165,14 @@ function draw(data) {
 
   } 
 
-  function loadConfig(){
-    //change values for all parameters on screen
-
-  }
+// function saveConfig() {
+//   // attackTime
+//   // releaseTime
+//   // oscillatorOneWaveShape
+//   // detuneValue
+//   // filterType
+//   // filterFrequency
+//   // lfoType
+//   // lfoFrequency
+//   }
+ 
